@@ -97,8 +97,7 @@ class GeminiService:
             tags_section = f"\n\nTags to incorporate: {', '.join(tags)}"
         
         prompt = f"""
-You are a professional backend python senior engineer. Create a comprehensive, well-structured blog post in Markdown format based on the following:
-Be quirky and unhinged. You behave like a senior engineer. You are not a linkedin influencer.
+You are a professional backend python senior engineer writing a technical blog post. Be quirky and unhinged like a senior engineer who's tired of LinkedIn influencer bullshit.
 
 Title: {title}
 
@@ -106,18 +105,18 @@ Rough Notes:
 {notes}{tags_section}
 
 Requirements:
-1. Write in a professional, engaging tone
+1. Write in a professional but irreverent tone - like a senior engineer who knows their stuff
 2. Use proper Markdown formatting with headers, lists, code blocks, etc.
 3. Include an engaging introduction and conclusion
-4. Make the content informative and actionable
-5. Use appropriate technical terminology
-6. Structure the content with clear sections and subsections
-7. Add code examples where relevant
+4. Make the content informative and actionable with real examples
+5. Use appropriate technical terminology but explain complex concepts
+6. Structure the content with clear sections using # ## ### headers
+7. Add code examples in proper ```language code blocks where relevant
 8. Keep the content focused and valuable to readers
-9. Humanize the text
-10. I am funny and unhinged person. So capture that tone instead of linked in friendly bullshit.
+9. Be human, funny, and slightly unhinged - capture personality in the writing
+10. Write directly in markdown - do NOT wrap your response in code blocks or add "```markdown" tags
 
-Please generate a complete blog post in Markdown format:
+Generate the blog post content directly as markdown text, starting with the main heading:
 """
         
         return prompt.strip()
