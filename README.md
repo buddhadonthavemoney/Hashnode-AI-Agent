@@ -1,6 +1,11 @@
 # Hashnode AI agent
 
 A modular FastAPI application that receives blog titles and rough notes, uses Gemini AI to convert them into Markdown blog posts, and publishes them to Hashnode using GraphQL API.
+![image](https://github.com/user-attachments/assets/fabe1850-590f-42a4-915b-6ee15e48187b)
+![image](https://github.com/user-attachments/assets/4ce829f0-b75f-4fb5-9409-a804203e9dbe)
+![image](https://github.com/user-attachments/assets/688cc23e-5e8c-4513-b751-cbdffbdf79f2)
+
+
 
 ## 🚀 Quick Start with Docker
 
