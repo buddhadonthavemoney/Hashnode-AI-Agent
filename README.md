@@ -38,7 +38,7 @@ A modular FastAPI application that receives blog titles and rough notes, uses Ge
 
 ```
 ├── backend/                 # FastAPI backend
-│   ├── mcp_blog_server/    # Application package
+│   ├── agent/    # Application package
 │   │   ├── config.py       # Configuration management
 │   │   ├── models/         # Pydantic models
 │   │   ├── services/       # Business logic

@@ -14,23 +14,23 @@ os.environ['HASHNODE_PUBLICATION_ID'] = 'test_publication_id'
 try:
     # Test imports
     print("Testing imports...")
-    from mcp_blog_server.config import settings
+    from agent.config import settings
     print(f"✅ Config loaded: {settings.app_name} v{settings.app_version}")
     
-    from mcp_blog_server.models.blog import BlogRequest, BlogPost, BlogResponse
+    from agent.models.blog import BlogRequest, BlogPost, BlogResponse
     print("✅ Blog models imported successfully")
     
-    from mcp_blog_server.models.hashnode import HashnodePublishRequest, HashnodePublishResponse
+    from agent.models.hashnode import HashnodePublishRequest, HashnodePublishResponse
     print("✅ Hashnode models imported successfully")
     
-    from mcp_blog_server.services.gemini_service import GeminiService
+    from agent.services.gemini_service import GeminiService
     print("✅ Gemini service imported successfully")
     
-    from mcp_blog_server.services.hashnode_service import HashnodeService
+    from agent.services.hashnode_service import HashnodeService
     print("✅ Hashnode service imported successfully")
     
-    from mcp_blog_server.routes.blog_routes import router as blog_router
-    from mcp_blog_server.routes.health_routes import router as health_router
+    from agent.routes.blog_routes import router as blog_router
+    from agent.routes.health_routes import router as health_router
     print("✅ Routes imported successfully")
     
     # Test main app

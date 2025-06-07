@@ -15,13 +15,13 @@ A modular FastAPI application that generates and publishes blog posts using Goog
 ## Project Structure
 
 ```
-mcp_blog_server/
+agent/
 ├── main.py                    # FastAPI application entry point
 ├── requirements.txt           # Python dependencies
 ├── .env.example              # Environment variables template
 ├── test_server.py            # Test script to verify setup
 ├── start_dev.py              # Development startup script
-├── mcp_blog_server/
+├── agent/
 │   ├── __init__.py
 │   ├── config.py             # Configuration management
 │   ├── models/               # Pydantic data models
@@ -41,7 +41,7 @@ mcp_blog_server/
 
 ```bash
 git clone <repo-url>
-cd mcp_blog_server
+cd agent
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt

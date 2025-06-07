@@ -9,8 +9,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from mcp_blog_server.config import settings
-from mcp_blog_server.routes import blog_router, health_router
+from agent.config import settings
+from agent.routes import blog_router, health_router
 
 # Configure logging
 logging.basicConfig(

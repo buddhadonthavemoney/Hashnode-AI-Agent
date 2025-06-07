@@ -1,7 +1,7 @@
 services:
   backend:
     build: ./backend
-    container_name: mcp-blog-backend
+    container_name: hashnode_agent_backend
     ports:
       - "8000:8000"
     environment:
@@ -18,7 +18,7 @@ services:
 
   frontend:
     build: ./frontend
-    container_name: mcp-blog-frontend
+    container_name: hashnode_agent_frontend
     ports:
       - "3003:3003"
     depends_on:
@@ -33,4 +33,4 @@ services:
 
 networks:
   default:
-    name: mcp-blog-network 
+    name: hashnode_agent_network 
