@@ -1,4 +1,4 @@
-# MCP Blog Server
+# Hashnode AI agent
 
 A modular FastAPI application that receives blog titles and rough notes, uses Gemini AI to convert them into Markdown blog posts, and publishes them to Hashnode using GraphQL API.
 
@@ -13,8 +13,7 @@ A modular FastAPI application that receives blog titles and rough notes, uses Ge
 
 1. **Clone and configure environment:**
    ```bash
-   git clone <repository-url>
-   cd hashnode\ mcp
+   git clone https://github.com/buddhadonthavemoney/Hashnode-AI-Agent
    
    # Copy environment template
    cp backend/.env.example backend/.env
