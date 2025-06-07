@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCP Blog Server</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-blog"></i> MCP Blog Server</h1>
+                <p>AI-Powered Blog Generation & Publishing</p>
+                <div class="status-indicator" id="statusIndicator">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Checking server...</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="main">
+            <div class="tabs">
+                <button class="tab-button active" data-tab="generate">
+                    <i class="fas fa-magic"></i> Generate Blog
+                </button>
+                <button class="tab-button" data-tab="publish">
+                    <i class="fas fa-upload"></i> Publish Blog
+                </button>
+                <button class="tab-button" data-tab="combo">
+                    <i class="fas fa-rocket"></i> Generate & Publish
+                </button>
+            </div>
+
+            <!-- Generate Blog Tab -->
+            <div class="tab-content active" id="generate">
+                <div class="card">
+                    <h2><i class="fas fa-pen-fancy"></i> Generate Blog Post</h2>
+                    <form id="generateForm">
+                        <div class="form-group">
+                            <label for="generateTitle">Blog Title</label>
+                            <input type="text" id="generateTitle" name="title" required placeholder="Enter your blog post title...">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="generateNotes">Rough Notes</label>
+                            <textarea id="generateNotes" name="notes" required placeholder="Enter your rough notes, ideas, and key points..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="generateTags">Tags (comma-separated)</label>
+                            <input type="text" id="generateTags" name="tags" placeholder="Python, Web Development, AI...">
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-magic"></i> Generate Blog Post
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="result-card" id="generateResult" style="display: none;">
+                    <h3><i class="fas fa-file-alt"></i> Generated Blog Post</h3>
+                    <div class="blog-preview" id="generatePreview"></div>
+                </div>
+            </div>
+
+            <!-- Publish Blog Tab -->
+            <div class="tab-content" id="publish">
+                <div class="card">
+                    <h2><i class="fas fa-cloud-upload-alt"></i> Publish Blog Post</h2>
+                    <form id="publishForm">
+                        <div class="form-group">
+                            <label for="publishTitle">Blog Title</label>
+                            <input type="text" id="publishTitle" name="title" required placeholder="Enter blog post title...">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="publishContent">Markdown Content</label>
+                            <textarea id="publishContent" name="content" required placeholder="Paste your markdown content here..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="publishTags">Tags (comma-separated)</label>
+                            <input type="text" id="publishTags" name="tags" placeholder="Python, Web Development, AI...">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="publishCoverImage">Cover Image URL (optional)</label>
+                            <input type="url" id="publishCoverImage" name="cover_image_url" placeholder="https://example.com/image.jpg">
+                        </div>
+                        
+                        <button type="submit" class="btn btn-secondary">
+                            <i class="fas fa-upload"></i> Publish to Hashnode
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="result-card" id="publishResult" style="display: none;">
+                    <h3><i class="fas fa-check-circle"></i> Publishing Result</h3>
+                    <div id="publishPreview"></div>
+                </div>
+            </div>
+
+            <!-- Generate & Publish Tab -->
+            <div class="tab-content" id="combo">
+                <div class="card">
+                    <h2><i class="fas fa-rocket"></i> Generate & Publish Blog Post</h2>
+                    <form id="comboForm">
+                        <div class="form-group">
+                            <label for="comboTitle">Blog Title</label>
+                            <input type="text" id="comboTitle" name="title" required placeholder="Enter your blog post title...">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="comboNotes">Rough Notes</label>
+                            <textarea id="comboNotes" name="notes" required placeholder="Enter your rough notes, ideas, and key points..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="comboTags">Tags (comma-separated)</label>
+                            <input type="text" id="comboTags" name="tags" placeholder="Python, Web Development, AI...">
+                        </div>
+                        
+                        <button type="submit" class="btn btn-accent">
+                            <i class="fas fa-rocket"></i> Generate & Publish
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="result-card" id="comboResult" style="display: none;">
+                    <h3><i class="fas fa-sparkles"></i> Generation & Publishing Complete</h3>
+                    <div id="comboPreview"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <i class="fas fa-magic fa-spin"></i>
+            <p id="loadingText">Processing...</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
