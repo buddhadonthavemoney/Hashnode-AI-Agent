@@ -13,7 +13,7 @@ from pathlib import Path
 
 # Configuration
 PORT = 3003
-HOST = "localhost"
+HOST = "0.0.0.0"  # Listen on all interfaces for Docker
 
 def main():
     """Launch the frontend with a local HTTP server."""
@@ -36,10 +36,11 @@ def main():
             print(f"📡 Server running at: {url}")
             print(f"📁 Serving files from: {frontend_dir}")
             print("\n💡 Make sure the MCP Blog Server is running on http://localhost:8000")
-            print("\n🌐 Opening browser...")
             
-            # Open browser
-            webbrowser.open(url)
+            # Only open browser if not in Docker (when HOST is localhost)
+            if HOST == "localhost":
+                print("\n🌐 Opening browser...")
+                webbrowser.open(url)
             
             print(f"\n✅ Frontend launched successfully!")
             print("⏹️  Press Ctrl+C to stop the server\n")

@@ -1,314 +1,201 @@
 # MCP Blog Server
 
-A modular FastAPI application that generates and publishes blog posts using Google Gemini AI and Hashnode's GraphQL API.
+A modular FastAPI application that receives blog titles and rough notes, uses Gemini AI to convert them into Markdown blog posts, and publishes them to Hashnode using GraphQL API.
 
-## Features
+## 🚀 Quick Start with Docker
 
-- 🤖 **AI-Powered Content Generation**: Uses Google Gemini to transform rough notes into polished blog posts
-- 📝 **Markdown Output**: Generates properly formatted Markdown content
-- 🚀 **Auto Publishing**: Direct integration with Hashnode for seamless publishing
-- 🔧 **Modular Architecture**: Clean separation of concerns with services, models, and routes
-- ⚡ **Fast API**: Built on FastAPI for high performance and automatic API documentation
-- 🌐 **RESTful API**: Easy-to-use REST endpoints for all operations
-- 😄 **Personality**: Captures your unique voice and tone (including humor and personality)
+### Prerequisites
+- Docker and Docker Compose installed
+- Gemini API key
+- Hashnode API token and publication ID
 
-## Project Structure
+### Setup
+
+1. **Clone and configure environment:**
+   ```bash
+   git clone <repository-url>
+   cd hashnode\ mcp
+   
+   # Copy environment template
+   cp backend/.env.example backend/.env
+   
+   # Edit backend/.env with your API keys:
+   # GEMINI_API_KEY=your_gemini_api_key
+   # HASHNODE_TOKEN=your_hashnode_token
+   # HASHNODE_PUBLICATION_ID=your_publication_id
+   ```
+
+2. **Start the application:**
+   ```bash
+   docker-compose up
+   ```
+
+3. **Access the application:**
+   - Frontend: http://localhost:3003
+   - Backend API: http://localhost:8000
+   - API Documentation: http://localhost:8000/docs
+
+## 🏗️ Architecture
 
 ```
-mcp_blog_server/
-├── main.py                    # FastAPI application entry point
-├── requirements.txt           # Python dependencies
-├── .env.example              # Environment variables template
-├── test_server.py            # Test script to verify setup
-├── start_dev.py              # Development startup script
-├── mcp_blog_server/
-│   ├── __init__.py
-│   ├── config.py             # Configuration management
-│   ├── models/               # Pydantic data models
-│   │   ├── blog.py          # Blog-related models
-│   │   └── hashnode.py      # Hashnode API models
-│   ├── services/            # Business logic
-│   │   ├── gemini_service.py    # AI content generation
-│   │   └── hashnode_service.py  # Hashnode publishing
-│   └── routes/              # API endpoints
-│       ├── blog_routes.py   # Blog operations
-│       └── health_routes.py # Health checks
+├── backend/                 # FastAPI backend
+│   ├── mcp_blog_server/    # Application package
+│   │   ├── config.py       # Configuration management
+│   │   ├── models/         # Pydantic models
+│   │   ├── services/       # Business logic
+│   │   └── routes/         # API endpoints
+│   ├── main.py             # Application entry point
+│   ├── start_dev.py        # Development server
+│   └── Dockerfile          # Backend container
+├── frontend/               # Web frontend
+│   ├── index.html          # Main HTML
+│   ├── styles.css          # Styling
+│   ├── script.js           # JavaScript functionality
+│   ├── launch.py           # Frontend server
+│   └── Dockerfile          # Frontend container
+└── docker-compose.yml      # Container orchestration
 ```
 
-## Quick Start
+## ✨ Features
 
-### 1. Clone and Setup
+### Backend
+- **🤖 AI Content Generation**: Uses Google Gemini to create engaging blog posts
+- **📝 Markdown Output**: Generates clean, properly formatted markdown
+- **🚀 Hashnode Publishing**: Direct integration with Hashnode GraphQL API
+- **🏷️ Tag Management**: Automatic tag slug generation and validation
+- **📊 Health Monitoring**: Built-in health checks and status endpoints
+- **🔧 Modular Design**: Clean separation of concerns
 
-```bash
-git clone <repo-url>
-cd mcp_blog_server
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-pip install -r requirements.txt
-```
+### Frontend
+- **📱 Responsive Design**: Works on desktop and mobile
+- **🎨 Modern UI**: Clean, professional interface
+- **⚡ Real-time Status**: Live server status monitoring
+- **🔄 Tab Navigation**: Easy switching between functions
+- **📋 Content Preview**: Markdown rendering with syntax highlighting
+- **🔗 One-click Copy**: Transfer generated content to publish form
 
-### 2. Environment Configuration
+## 🛠️ Development
 
-Copy the example environment file and configure it:
+### Local Development (without Docker)
 
-```bash
-cp .env.example .env
-```
+1. **Backend:**
+   ```bash
+   cd backend
+   pip install -r requirements.txt
+   python start_dev.py
+   ```
 
-Edit `.env` with your API credentials:
+2. **Frontend:**
+   ```bash
+   cd frontend
+   python launch.py
+   ```
 
-```env
-# Required API Keys
-GEMINI_API_KEY=your_actual_gemini_api_key_here
-HASHNODE_TOKEN=your_actual_hashnode_token_here
-HASHNODE_PUBLICATION_ID=your_actual_publication_id_here
+### API Endpoints
 
-# Optional Settings
-DEBUG=false
-HOST=0.0.0.0
-PORT=8000
-GEMINI_MODEL=gemini-pro
-```
-
-### 3. Test the Setup
-
-```bash
-python test_server.py
-```
-
-### 4. Start the Server
-
-Option A - Using the development script (recommended):
-```bash
-python start_dev.py
-```
-
-Option B - Direct startup:
-```bash
-python main.py
-```
-
-Option C - Using uvicorn directly:
-```bash
-uvicorn main:app --reload --host 0.0.0.0 --port 8000
-```
-
-### 5. Access the API
-
-- **API Documentation**: http://localhost:8000/docs
-- **Alternative Docs**: http://localhost:8000/redoc
-- **Health Check**: http://localhost:8000/health
-- **Root Endpoint**: http://localhost:8000/
-
-## API Endpoints
-
-### Blog Operations
-
-#### `POST /blog/generate`
-Generate a blog post from title and notes.
-
-**Request Body:**
-```json
-{
-  "title": "Getting Started with FastAPI",
-  "notes": "FastAPI is a modern Python web framework. Key features include automatic API docs, type hints, async support.",
-  "tags": ["python", "fastapi", "web-development"],
-  "publish_immediately": false
-}
-```
-
-**Response:**
-```json
-{
-  "success": true,
-  "blog_post": {
-    "title": "Getting Started with FastAPI",
-    "content": "# Getting Started with FastAPI\n\n...",
-    "tags": ["python", "fastapi", "web-development"],
-    "summary": "FastAPI is a modern Python web framework...",
-    "created_at": "2024-01-01T12:00:00"
-  },
-  "hashnode_url": null,
-  "message": "Blog post generated successfully",
-  "generation_time_seconds": 3.45
-}
-```
-
-#### `POST /blog/publish`
-Publish an existing blog post to Hashnode.
-
-**Request Body:**
-```json
-{
-  "title": "My Blog Post",
-  "content": "# My Blog Post\n\nContent here...",
-  "tags": ["example"],
-  "summary": "A sample blog post",
-  "created_at": "2024-01-01T12:00:00"
-}
-```
-
-#### `POST /blog/generate-and-publish`
-Generate and immediately publish a blog post (convenience endpoint).
-
-#### `GET /blog/publication-info`
-Get information about the configured Hashnode publication.
-
-### Health Checks
-
-#### `GET /health`
-Basic health check endpoint.
-
-#### `GET /health/detailed`
-Detailed health check including external service status.
-
-## Usage Examples
-
-### Generate a Blog Post
-
-```bash
-curl -X POST "http://localhost:8000/blog/generate" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "title": "Advanced Python Tips",
-    "notes": "List comprehensions, decorators, context managers, async/await patterns. Make it funny and engaging.",
-    "tags": ["python", "tips", "advanced"],
-    "publish_immediately": false
-  }'
-```
-
-### Generate and Publish Immediately
-
-```bash
-curl -X POST "http://localhost:8000/blog/generate-and-publish" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "title": "Why I Love Bug Hunting",
-    "notes": "Debugging is like being a detective. Sometimes the bug is obvious, sometimes it hides. Add some humor about common debugging experiences.",
-    "tags": ["debugging", "programming", "humor"]
-  }'
-```
-
-### Check Publication Info
-
-```bash
-curl -X GET "http://localhost:8000/blog/publication-info"
-```
-
-## Configuration
+- `POST /blog/generate` - Generate blog post from notes
+- `POST /blog/publish` - Publish blog post to Hashnode
+- `POST /blog/generate-and-publish` - One-step generation and publishing
+- `GET /blog/publication-info` - Get Hashnode publication details
+- `GET /health` - Health check
+- `GET /health/detailed` - Detailed service status
 
 ### Environment Variables
 
-| Variable | Description | Required | Default |
-|----------|-------------|----------|---------|
-| `GEMINI_API_KEY` | Google Gemini API key | Yes | - |
-| `HASHNODE_TOKEN` | Hashnode API token | Yes | - |
-| `HASHNODE_PUBLICATION_ID` | Your Hashnode publication ID | Yes | - |
-| `DEBUG` | Enable debug mode | No | `false` |
-| `HOST` | Server host | No | `0.0.0.0` |
-| `PORT` | Server port | No | `8000` |
-| `GEMINI_MODEL` | Gemini model to use | No | `gemini-pro` |
-| `MAX_TITLE_LENGTH` | Maximum title length | No | `200` |
-| `MAX_NOTES_LENGTH` | Maximum notes length | No | `5000` |
-| `GENERATION_TIMEOUT` | Generation timeout (seconds) | No | `30` |
-
-### Getting API Keys
-
-#### Gemini API Key
-1. Visit [Google AI Studio](https://aistudio.google.com/)
-2. Sign in with your Google account
-3. Create a new API key
-4. Copy the key to your `.env` file
-
-#### Hashnode Token
-1. Go to [Hashnode Settings → Developer](https://hashnode.com/settings/developer)
-2. Generate a new Personal Access Token
-3. Copy the token to your `.env` file
-
-#### Publication ID
-1. Visit your Hashnode publication dashboard
-2. Go to Publication Settings
-3. Find your publication ID in the URL or settings
-4. Copy the ID to your `.env` file
-
-## Development
-
-### Running Tests
-
 ```bash
-python test_server.py
+# Required
+GEMINI_API_KEY=your_gemini_api_key_here
+HASHNODE_TOKEN=your_hashnode_token_here
+HASHNODE_PUBLICATION_ID=your_publication_id_here
+
+# Optional
+DEBUG=True
+LOG_LEVEL=INFO
+GEMINI_MODEL=gemini-2.0-flash
+HASHNODE_API_URL=https://gql.hashnode.com/
+SERVER_HOST=0.0.0.0
+SERVER_PORT=8000
 ```
 
-### Development Mode
+## 🔧 Configuration
 
-For development with auto-reload:
+### Gemini AI Setup
+1. Get API key from [Google AI Studio](https://makersuite.google.com/app/apikey)
+2. Add to `backend/.env` as `GEMINI_API_KEY`
+
+### Hashnode Setup
+1. Get your API token from [Hashnode](https://hashnode.com/settings/developer)
+2. Find your publication ID from your blog's settings
+3. Add both to `backend/.env`
+
+## 📦 Docker Commands
 
 ```bash
-uvicorn main:app --reload --host 0.0.0.0 --port 8000
+# Start services
+docker-compose up
+
+# Start in background
+docker-compose up -d
+
+# Rebuild and start
+docker-compose up --build
+
+# Stop services
+docker-compose down
+
+# View logs
+docker-compose logs -f
+
+# View specific service logs
+docker-compose logs -f backend
+docker-compose logs -f frontend
 ```
 
-### Project Architecture
+## 🩺 Health Checks
 
-The application follows a clean architecture pattern:
+Both services include health checks:
+- Backend: `curl http://localhost:8000/health`
+- Frontend: `curl http://localhost:3003/`
 
-- **`main.py`**: FastAPI application setup and configuration
-- **`config.py`**: Centralized configuration management using Pydantic Settings
-- **`models/`**: Pydantic models for request/response validation
-- **`services/`**: Business logic for AI generation and Hashnode publishing
-- **`routes/`**: API endpoint definitions
-
-### Adding New Features
-
-1. **New Models**: Add to `models/` directory
-2. **New Services**: Add to `services/` directory
-3. **New Routes**: Add to `routes/` directory and include in `main.py`
-4. **Configuration**: Add new settings to `config.py`
-
-## Troubleshooting
+## 🐛 Troubleshooting
 
 ### Common Issues
 
-1. **Environment Variables Not Set**
-   - Error: `ValidationError: Field required`
-   - Solution: Ensure all required variables are set in `.env`
+1. **Port conflicts:**
+   ```bash
+   # Change ports in docker-compose.yml
+   ports:
+     - "8001:8000"  # Use different host port
+   ```
 
-2. **API Key Invalid**
-   - Error: `Authentication failed`
-   - Solution: Verify your API keys are correct and active
+2. **Environment variables not loaded:**
+   ```bash
+   # Ensure backend/.env exists with proper values
+   cat backend/.env
+   ```
 
-3. **Port Already in Use**
-   - Error: `Address already in use`
-   - Solution: Change the port in `.env` or kill the process using the port
+3. **Container build issues:**
+   ```bash
+   # Clean rebuild
+   docker-compose down
+   docker-compose build --no-cache
+   docker-compose up
+   ```
 
-4. **Import Errors**
-   - Error: `ModuleNotFoundError`
-   - Solution: Ensure virtual environment is activated and dependencies installed
-
-### Getting Help
-
-- Check the interactive API docs at `/docs`
-- Use the health endpoints to verify service status
-- Run the test script to validate setup
-
-## Contributing
+## 🤝 Contributing
 
 1. Fork the repository
 2. Create a feature branch
 3. Make your changes
-4. Add tests if needed
+4. Test thoroughly
 5. Submit a pull request
 
-## License
+## 📄 License
 
-MIT License - feel free to use this project as you wish!
+This project is licensed under the MIT License.
 
-## Changelog
+## 🙏 Acknowledgments
 
-### v1.0.0
-- Initial release
-- Gemini AI integration for blog generation
-- Hashnode publishing support
-- Clean modular architecture
-- Comprehensive API documentation
-- Health check endpoints
-- Environment-based configuration 
+- Google Gemini AI for content generation
+- Hashnode for the publishing platform
+- FastAPI for the excellent web framework 

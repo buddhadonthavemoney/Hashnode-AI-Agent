@@ -114,7 +114,7 @@ function showMessage(container, type, message) {
     // Auto-remove after 5 seconds
     setTimeout(() => {
         messageDiv.remove();
-    }, 5000);
+    }, 500000);
 }
 
 // Form handlers
